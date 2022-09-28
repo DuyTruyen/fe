@@ -14,6 +14,9 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { SharedModule } from './shared/shared.module';
+import { TodoCatListModule } from './component/todo-cat-list/todo-cat-list.module';
+import { TodoListModule } from './component/todo-list/todo-list.module';
 
 registerLocaleData(en);
 
@@ -30,7 +33,10 @@ registerLocaleData(en);
     IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
-    NzButtonModule
+    NzButtonModule,
+    SharedModule,
+    TodoCatListModule,
+    TodoListModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
