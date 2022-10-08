@@ -17,6 +17,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { SharedModule } from './shared/shared.module';
 import { TodoCatListModule } from './component/todo-cat-list/todo-cat-list.module';
 import { TodoListModule } from './component/todo-list/todo-list.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(en);
 
@@ -36,7 +37,8 @@ registerLocaleData(en);
     NzButtonModule,
     SharedModule,
     TodoCatListModule,
-    TodoListModule
+    TodoListModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

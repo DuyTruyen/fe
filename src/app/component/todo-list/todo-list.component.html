@@ -1,23 +1,78 @@
-<input nz-input placeholder="Basic usage" [(ngModel)]="value" /> <button nz-button nzType="primary">Primary</button>
+<div style="margin-bottom: 20px;">
+  <!-- <span>
+    <input nz-input placeholder="Basic usage" [(ngModel)]="value" />
+  </span>
+  <span> -->
+    <button nz-button nzType="primary" (click)="showAddModal()">Thêm mới</button>
+  <!-- </span> -->
+</div>
 
 <nz-table #basicTable [nzData]="listOfData">
   <thead>
-    <tr>
+    <tr >
       <th>STT</th>
       <th>Tên</th>
       <th>Mô tả</th>
-      <th>Ưu tiên</th>
+
       <th>Hoàn thành</th>
+      <th>Lặp lại</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of basicTable.data;let i = index">
-      <td>{{ i }}</td>
-      <td>{{ data.name }}</td>
+    <tr *ngFor="let data of basicTable.data;let i = index" (dblclick)="showEditModal(data)">
+      <td>{{ i+1 }}</td>
+      <td>{{ data.name }}
+
+        <span *ngIf="data.isImportant" nz-icon nzType="star" nzTheme="outline"></span>
+      </td>
       <td>{{ data.description }}</td>
-      <td>{{ data.isPiority }}</td>
-      <td><label for=""></label></td>
+
+      <td>{{ (data.isFinished)?"Đã hoàn thành":"Chưa hoàn thành" }}</td>
+      <td>{{ (data.recurrence=='daily')?"Hằng ngày":"Không" }}</td>
+
 
     </tr>
   </tbody>
 </nz-table>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Task" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired nzFor="note">Tên</nz-form-label>
+        <nz-form-control nzErrorTip="Hãy nhập tên">
+          <nz-input-group nzPrefixIcon="user">
+            <input formControlName="name" nz-input placeholder="name" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired nzFor="note">Mô tả</nz-form-label>
+        <nz-form-control nzErrorTip="Hãy nhập tên">
+          <nz-input-group nzPrefixIcon="lock">
+            <input formControlName="description" nz-input type="" placeholder="description" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired nzFor="note">Lặp lại</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng chọn">
+            <nz-select formControlName="recurrence">
+              <nz-option nzValue="none" nzLabel="Không"></nz-option>
+              <nz-option nzValue="daily" nzLabel="Hằng ngày"></nz-option>
+              <!-- <nz-option nzValue="" nzLabel="Disabled" nzDisabled></nz-option> -->
+            </nz-select>
+            <!-- <input formControlName="recurrence" nz-input type="" placeholder="description" /> -->
+
+        </nz-form-control>
+      </nz-form-item><nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired nzFor="note">Task quan trọng</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng chọn">
+
+            <label nz-checkbox formControlName="isImportant"></label>
+            <!-- <input formControlName="isImportant" nz-input type="" placeholder="description" /> -->
+
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
